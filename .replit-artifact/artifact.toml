@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Brobex Coffee"
+version = "1.0.0"
+id = "artifacts/brobex-coffee"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22121
+
+[services.development]
+run = "pnpm --filter @workspace/brobex-coffee run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/brobex-coffee", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/brobex-coffee/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22121"
+BASE_PATH = "/"
